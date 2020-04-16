@@ -1,6 +1,85 @@
 /* This is an example of using Sass, otherwise plain CSS works too*/
 $primary-background: pink;
 
+// body {
+//   background-color: $primary-background;
+// }
+
 body {
-  background-color: $primary-background;
+  font-family: 'Lobster', cursive;
+  display: grid;
+  grid-template-areas:
+    "nav"
+    "main";
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: 100px 100vh;
+}
+
+nav {
+  grid-area: nav;
+  background-color: #292D3E;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  height: 100px;
+  color: pink;
+  font-size: 25px;
+}
+
+
+main {
+  grid-area: main;
+  background: repeat center/100% url(../images/hotel.jpg);
+  background-attachment: fixed;
+  height: 100vh;
+  background-size: cover;
+  background-color: rgba(0,0,0,.5);
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  overflow: scroll;
+}
+
+
+.welcome-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 39%;
+    height: 250px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.75);
+    border-radius: 10px;
+    margin-top: 150px;
+  }
+
+  .login-btn {
+    width: 40%;
+    padding: 10px;
+    font-size: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: pink;
+
+  }
+
+  .enter-btn {
+  font-family: 'Lobster', cursive;
+  height: 50px;
+  width: 158px;
+  margin-left: 10px;
+  margin-top: 25px;
+  margin-right: 10px;
+  font-size: 1.2em;
+  color: pink;
+  background-color: #292D3E;
+  border: 1px solid #1D9AF2;
+  border-radius: 4px;
+  padding: 0 15px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
