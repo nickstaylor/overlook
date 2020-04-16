@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-    <title>Webpack Starter Kit</title>
+    <title>Overlook Hotel</title>
   </head>
   <body>
-    <h1>Webpack Starter Kit</h1>
+    <nav>
+      <h1>Welcome to the Overlook Hotel</h1>
+    </nav>
+    <main>
+      <!-- login section -->
+      <section class="welcome-page">
+        <div class="error-message"></div>
+        <input id="login" class="login-btn" "" aria-label="enter-username" type="text" name="userID" placeholder="User ID">
+        <input id="password" class="login-btn" aria-label="enter-password" type="password" name="password" placeholder="password">
+        <button class="enter-btn" id="enter" type="submit" aria-label="submit button for logging in" name="login-button">Login</button>
+      </section>
 
-    <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
-
+      <!-- manager and user section -->
+    </main>
     <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
   </body>
 </html>
