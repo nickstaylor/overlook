@@ -16,9 +16,10 @@ import domUpdates from './domUpdates.js'
 let room;
 let user;
 let booking
-let hotel = new Hotel()
 let manager
 let today = moment().format("YYYY/MM/DD")
+let todayforDisplay = moment().format("MMM Do YYYY")
+let hotel = new Hotel()
 
 $('#enter').click(startLogin)
 
@@ -31,13 +32,14 @@ function startLogin() {
     .catch(err => console.log('error', err))
 }
 
-//still writing this for displaying info.  Will be moved to domUpdates
-function loadInfo(){
-  let todayforDisplay = moment().format("MMM Do YYYY")
-  $('.test-date').html(todayforDisplay)
-  console.log(today);
+function loadManager(){
+  manager = new Manager()
+  let availRooms = hotel.checkRoomsAvailableForDay(today)
+  let todaysRevenue = hotel.calculateRevenueForDay(today)
+  console.log(manager);
+  domUpdates.togglePage($('.manager-page'), $('.welcome-page'))
+  domUpdates.displayManagerTodayInformation(availRooms, todaysRevenue, todayforDisplay)
 }
-
 
 function checkLogin(data){
     let username = $('#login').val()
@@ -46,24 +48,16 @@ function checkLogin(data){
     let password = $('#password').val()
     let validPW = validatePassword(password)
     if (username === 'manager' && validPW){
-        manager = new Manager('')
-        getBookingData()
-        console.log(manager);
-        domUpdates.togglePage($('.manager-page'), $('.welcome-page'),)
-        loadInfo()
-      // manager.getBookingData(manager) //this needs to be a method that
-      //extends from the user class
-       // domUpdates.displayInfoOnPage()
+        let currentUser = 'manager'
+        getBookingData(currentUser)
     } else {
-    let isValid = validateUserName(username, usernameValid, id)
-    if (isValid && validPW){
-     let currentUser = findUser(id, data)
-     getBookingData(currentUser)
-     domUpdates.togglePage($('.user-page'), $('.welcome-page'));
-     loadInfo()
-       //domUpdates.displayPage()
+      let isValid = validateUserName(username, usernameValid, id)
+      if (isValid && validPW){
+      let currentUser = findUser(id, data)
+      getBookingData(currentUser)
+      domUpdates.togglePage($('.user-page'), $('.welcome-page'));
      }
-   }
+    }
 }
 
 function validatePassword(password){
@@ -99,40 +93,42 @@ function findUser(id, data){
 }
 
 
-function getBookingData(person) {
+function getBookingData(currentUser) {
   Promise.all([
     fetch("https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings").then(promise => promise.json()),
     fetch("https://fe-apps.herokuapp.com/api/v1/overlook/1904/rooms/rooms").then(promise => promise.json())
-  ]).then(data => fetchHelper(data[0].bookings, data[1].rooms, person))
+  ]).then(data => fetchHelper(data[0].bookings, data[1].rooms, currentUser))
     .catch(err => console.log('error', err))
 }
 
-function fetchHelper(apiBookings, apiRooms, person){
+function fetchHelper(apiBookings, apiRooms, currentUser){
   assignApiBookings(apiBookings)
   assignApiRooms(apiRooms)
-  if (person !== undefined){
-  assignCurrentUser(person)
-}
+  if (currentUser !== 'manager'){
+  assignCurrentUser(currentUser)
+  } else {
+  loadManager()
+  }
 }
 
 function assignApiBookings(apiBookings){
   apiBookings.forEach(item=>{
   booking = new Booking(item)
   hotel.allBookings.push(booking)
-})
+  })
 }
 
 function assignApiRooms(apiRooms){
   apiRooms.forEach(item=>{
   room = new Room(item)
   hotel.allRooms.push(room)
-})
-console.log(hotel)
+  })
+  console.log(hotel)
 }
 
-function assignCurrentUser(person){
-  let userBookings = hotel.checkUserBookings(person.id)
-  user = new User(person, userBookings, hotel.allRooms)
+function assignCurrentUser(currentUser){
+  let userBookings = hotel.checkUserBookings(currentUser.id)
+  user = new User(currentUser, userBookings, hotel.allRooms)
   domUpdates.displayUserBookings(user)
   console.log('userBookings', userBookings);
   console.log(user);
