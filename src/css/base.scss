@@ -1,9 +1,6 @@
 /* This is an example of using Sass, otherwise plain CSS works too*/
 $primary-background: pink;
-
-// body {
-//   background-color: $primary-background;
-// }
+@import '_mixins.scss';
 
 body {
   font-family: 'Lobster', cursive;
@@ -18,8 +15,7 @@ body {
 nav {
   grid-area: nav;
   background-color: #292D3E;
-  display: flex;
-  justify-content: space-around;
+  @include primary-flex()
   align-items: center;
   position: fixed;
   width: 100%;
@@ -35,9 +31,7 @@ main {
   background-attachment: fixed;
   height: 100vh;
   background-size: cover;
-  background-color: rgba(0,0,0,.5);
-  display: flex;
-  justify-content: space-around;
+  @include primary-flex()
   flex-wrap: wrap;
   overflow: scroll;
 }
@@ -54,6 +48,11 @@ main {
     box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.75);
     border-radius: 10px;
     margin-top: 150px;
+    div {
+      color: red;
+      font-family: arial;
+      font-weight: bold;
+    }
   }
 
   .login-btn {
@@ -69,17 +68,57 @@ main {
 
   .enter-btn {
   font-family: 'Lobster', cursive;
-  height: 50px;
-  width: 158px;
-  margin-left: 10px;
+  height: 40px;
+  width: 120px;
   margin-top: 25px;
-  margin-right: 10px;
   font-size: 1.2em;
   color: pink;
   background-color: #292D3E;
   border: 1px solid #1D9AF2;
   border-radius: 4px;
-  padding: 0 15px;
+  padding: 0 10px;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+}
+
+.user-page,
+.manager-page {
+  height: 90%;
+  width: 90%;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 20px;
+  // margin-left: 20px;
+  // margin-right: 20px;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.75);
+}
+
+.left-side-user-history,
+.right-side-user-bookroom {
+  height: 95%;
+  width: 95%;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  align-items: center;
+  // overflow: scroll;
+}
+
+.user-bookings{
+  // font-family: 'Raleway', sans-serif;
+  font-size: .9em;
+  height: 70%;
+  width: 80%;
+  overflow: scroll;
+   b {
+     color: green;
+   }
+}
+
+.hidden {
+  display: none;
 }
