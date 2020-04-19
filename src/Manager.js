@@ -1,21 +1,14 @@
 // import domUpdates from '.domUpdates'
-import User from './User'
-import Hotel from './Hotel'
+import User from './User.js'
+import Hotel from './Hotel.js'
 
 class Manager {
-  constructor(person){
-  //   super()
-    this.id = person
-    // this.bookings = allBookings
-    // this.todaysBookings = findTodaysBookings()
-    // this.addRoomsToBookings(allRooms)
-
+  constructor(user){
+    // super(user, bookings, hotelRooms, totalSpent)
+    this.name = user.id || "BossHog"
+    this.isBossy = true;
   }
 
-
-  addRoomsToBookings(){
-    //adding the booking information to the bookings
-  }
 
   createBooking(){
 
@@ -26,7 +19,7 @@ class Manager {
   }
 
   findUser(){
-    //drop down os users.
+    //drop down of users.
   }
 
 }
