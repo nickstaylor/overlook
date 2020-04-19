@@ -2,23 +2,23 @@
 // import './images/turing-logo.png'
 
 import $ from 'jquery';
+import moment from 'moment';
+
 // import './css/style.scss';
 import './css/base.scss';
 import Room from './Room.js';
 import Manager from './Manager.js';
 import User from './User.js';
 import Booking from './Booking.js';
-import Bookings from './Bookings.js';
 import Hotel from './Hotel';
 import domUpdates from './domUpdates.js'
 
 let room;
 let user;
-let users = []
 let booking
-let bookings = new Bookings ()
 let hotel = new Hotel()
 let manager
+let today = moment().format("YYYY/MM/DD")
 
 $('#enter').click(startLogin)
 
@@ -31,74 +31,72 @@ function startLogin() {
     .catch(err => console.log('error', err))
 }
 
+//still writing this for displaying info.  Will be moved to domUpdates
+function loadInfo(){
+  let todayforDisplay = moment().format("MMM Do YYYY")
+  $('.test-date').html(todayforDisplay)
+  console.log(today);
+}
+
 
 function checkLogin(data){
     let username = $('#login').val()
+    let usernameValid = username.split('').splice(0, 8).join('');
+    let id = parseInt(username.split('').splice(8).join(''))
     let password = $('#password').val()
-    $('.error-message').html('')
-
-     if (password !== "overlook2020"){
-       return $('.error-message').html('Please enter info again')
-     }
-     let userID = checkUserID(username)
-     let currentUser = findUser(userID, data)
-
-
-     if (username === 'manager'){
-       let manager = 'manager'
-       getBookingData(manager)
-       // domUpdates.displayPage()
-     } else {
-       getBookingData(currentUser)
+    let validPW = validatePassword(password)
+    if (username === 'manager' && validPW){
+        manager = new Manager('')
+        getBookingData()
+        console.log(manager);
+        domUpdates.togglePage($('.manager-page'), $('.welcome-page'),)
+        loadInfo()
+      // manager.getBookingData(manager) //this needs to be a method that
+      //extends from the user class
+       // domUpdates.displayInfoOnPage()
+    } else {
+    let isValid = validateUserName(username, usernameValid, id)
+    if (isValid && validPW){
+     let currentUser = findUser(id, data)
+     getBookingData(currentUser)
+     domUpdates.togglePage($('.user-page'), $('.welcome-page'));
+     loadInfo()
        //domUpdates.displayPage()
      }
+   }
 }
 
+function validatePassword(password){
+  if (password !== "overlook2020"){
+    domUpdates.displayLoginError('Password incorrect. Please enter info again')
+    return false
+  }
+  return true
+}
 
-function findUser(userID, data){
-  console.log(userID);
-  console.log(data);
-  let myUser = data.find(user=> user.id === userID)
- console.log(myUser);
+function validateUserName(username, usernameValid, id){
+  if (username === 'manager'){
+    return true
+  }
+  if (usernameValid !== 'customer'){
+    domUpdates.displayLoginError('Username incorrect. Please enter info again')
+    return false
+  }
+  if (username.length < 9 || username.length > 10){
+    domUpdates.displayLoginError('Username incorrect. Please enter info again')
+    return false
+  }
+  if (id > 50 || id < 1){
+    domUpdates.displayLoginError('ID incorrect. Please enter info again')
+    return false
+  }
+  return true
+}
+
+function findUser(id, data){
+  let myUser = data.find(user=> user.id === id)
  return myUser
 }
-
-function checkUserID(username){
-  console.log(username);
-  let id1;
-  username = username.split('');
-  if (username.length < 9 || username.length > 10){
-    return $('.error-message').html('Please enter info again')
-  } else if (username.length === 9) {
-
-    id1 = (username[username.length - 1])
-    id1 = parseInt(id1)
-    return id1
-  } else if (username.length === 10) {
-    id1 = username[username.length - 2] + username[username.length - 1]
-    id1 = parseInt(id1)
-    return id1
-  } else {
-     $('.error-message').html('Please enter info again')
-  }
-}
-
-
-      // let id = 0
-      // login = login.join('')
-      // if (login.length === 9 && parseInt(login[login.length-1]) !== 'NaN' && login.includes('customer')) {
-      //   console.log("got here 9")
-      //   id = parseInt(login[login.length -1])}
-      //   $('#login').val('')
-      //   $('#password').val('')
-      //
-      // if (login.length === 10 && parseInt(login[login.length-2]) !== 'NaN' && parseInt(login[login.length-1]) !== 'NaN' && login.includes('customer')){
-      //    console.log("got here 10")
-      //       id = parseInt(login[login.length -2] + login[login.length -1])
-      //  }
-      //  // else { $('.error-message').html('Please enter info again')}
-      //   console.log(id)
-
 
 
 function getBookingData(person) {
@@ -112,15 +110,16 @@ function getBookingData(person) {
 function fetchHelper(apiBookings, apiRooms, person){
   assignApiBookings(apiBookings)
   assignApiRooms(apiRooms)
+  if (person !== undefined){
   assignCurrentUser(person)
+}
 }
 
 function assignApiBookings(apiBookings){
   apiBookings.forEach(item=>{
   booking = new Booking(item)
-  bookings.allBookings.push(booking)
+  hotel.allBookings.push(booking)
 })
-console.log(bookings)
 }
 
 function assignApiRooms(apiRooms){
@@ -132,13 +131,9 @@ console.log(hotel)
 }
 
 function assignCurrentUser(person){
-  console.log(person);
-  if (person === 'manager'){
-    manager = new Manager(person)
-  } else {
-    user = new User(person)
-  }
-  console.log(manager)
+  let userBookings = hotel.checkUserBookings(person.id)
+  user = new User(person, userBookings, hotel.allRooms)
+  domUpdates.displayUserBookings(user)
+  console.log('userBookings', userBookings);
   console.log(user);
 }
-// console.log(bookings)
