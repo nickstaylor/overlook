@@ -3,9 +3,8 @@ import User from './User.js'
 import Hotel from './Hotel.js'
 
 class Manager {
-  constructor(user){
-    // super(user, bookings, hotelRooms, totalSpent)
-    this.name = user.id || "BossHog"
+  constructor(){
+    this.name = "BossHog"
     this.isBossy = true;
   }
 
