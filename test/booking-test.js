@@ -6,25 +6,25 @@ import domUpdates from '../src/domUpdates';
 const spies = require('chai-spies');
 chai.use(spies);
 
-describe('Booking', function()){
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
+// describe('Booking', function()){
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// }
