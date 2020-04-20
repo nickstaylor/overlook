@@ -97,7 +97,9 @@ main {
 }
 
 .left-side-user-history,
-.right-side-user-bookroom {
+.right-side-user-bookroom,
+.left-side-manager-today,
+.right-side-manager-dashboard {
   height: 95%;
   width: 95%;
   border: 1px solid black;
@@ -106,6 +108,10 @@ main {
   // justify-content: center;
   align-items: center;
   // overflow: scroll;
+  span {
+    color: orange;
+    font-weight: bold;
+  }
 }
 
 .user-bookings{

@@ -60,24 +60,24 @@ describe ('User', function() {
   }, bookings, hotelRooms);
 })
 
-it('should be a function', function() {
+it.skip('should be a function', function() {
       expect(User).to.be.a("function")
     });
 
 
-it('should be an instance of User', function() {
+it.skip('should be an instance of User', function() {
   expect(user).to.be.an.instanceof(User);
 });
 
-it('should take in a user id', function(){
+it.skip('should take in a user id', function(){
   expect(user.id).to.eq(23)
 });
 
-it('should have a name', function(){
+it.skip('should have a name', function(){
   expect(user.name).to.eq("Angus Swift")
 });
 
-it('should have an array of bookings', function(){
+it.skip('should have an array of bookings', function(){
   expect(user.myBookings).to.deep.eq([
   {
     id: "5fwrgu4i7k55hl6xm",
@@ -96,7 +96,7 @@ it('should have an array of bookings', function(){
   console.log(user.myBookings);
 });
 
-it('should caclulate total spent on rooms', function(){
+it.skip('should caclulate total spent on rooms', function(){
   user.totalSpentAtHotel(hotelRooms)
   expect(user.totalSpent).to.eq(826.46)
 

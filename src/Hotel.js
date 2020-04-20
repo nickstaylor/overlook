@@ -4,54 +4,50 @@ class Hotel {
   constructor(){
     this.allRooms = []
     this.allBookings = []
-    this.todaysBookings = []
-    this.todaysDate = moment().format("YYYY/MM/DD")
-
   }
-  // this.todaysBookings = findTodaysBookings()
 
-  calculateRevenue(){
-    //caclulate revenue
+  calculateRevenueForDay(date){
+    let roomsBooked = this.getTodaysBookings(date)
+    console.log(date);
+    console.log('roomsBooked', roomsBooked);
+    let revenueForDay = roomsBooked.reduce((sum, booking)=>{
+        this.allRooms.forEach(room=>{
+          if (booking.roomNumber === room.number){
+            sum += room.costPerNight
+          }
+        })
+        return Number(sum.toFixed(2))
+    }, 0)
+    console.log('revenueForDay', revenueForDay);
+    return revenueForDay
   }
 
   filterRoomsByType(){
    //move to manager
   }
 
-  checkRoomsAvailable(date){
-    //for today or any date
+  getTodaysBookings(date){
+    let roomsBooked = this.allBookings.reduce((acc, booking)=>{
+        if (booking.date === date){
+          acc.push(booking)
+        }
+        return acc
+    }, [])
+    return roomsBooked
   }
+
+  //for today or any date
+  checkRoomsAvailableForDay(date){
+    let roomsBooked = this.getTodaysBookings(date)
+    let availRooms = this.allRooms.length - roomsBooked.length
+    // console.log('availRooms', availRooms);
+    return availRooms
+  }
+
 
   checkUserBookings(id){
     return this.allBookings.filter(booking => booking.userID === id)
-
-
     }
-
-
-  // generateFullIngredientList(partialIngredients) {
-  //       return partialIngredients.map(ingredient => {
-  //
-  //       let matchedIngredient = rawIngredientsDataPantry.find(rawIngredient =>{
-  //           return ingredient.ingredient === rawIngredient.id
-  //         })
-  //
-  //         return {name:matchedIngredient.name,
-  //                 id: matchedIngredient.id,
-  //                 estimatedCostInCents: matchedIngredient.estimatedCostInCents,
-  //                 amount: ingredient.amount
-  //               };
-  //     })
-  //   }
-
-
-
-
-//manager can use this and input any ID they want.
-
-  caclulateUserCost(id){
-
-  }
 
 }
 

@@ -18,6 +18,8 @@ class User {
   checkMyBookings(){
 
   }
+
+  //manager can use this and input any ID they want.
   //move this function to DOM and limit user exposure to hotel data
   totalSpentAtHotel(hotelRooms){
     let costofAllBookings = this.myBookings.reduce((sum, booking) =>{
@@ -30,8 +32,6 @@ class User {
     }, 0)
     return costofAllBookings
   }
-
-
 
 
 }
