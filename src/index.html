@@ -1,46 +1,98 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet">
-  <head>
-    <title>Overlook Hotel</title>
-  </head>
-  <body>
-    <nav class="welcome">
-      <h1>Welcome to the Overlook Hotel</h1>
-    </nav>
-    <nav class="user hidden">
 
-    </nav>
-    <main class="main-container">
-      <!-- login section -->
-      <section class="welcome-page">
-        <div class="error-message"></div>
-        <input id="login" class="login-btn" "" aria-label="enter-username" type="text" name="userID" placeholder="User ID">
-        <input id="password" class="login-btn" aria-label="enter-password" type="password" name="password" value="overlook2020" placeholder="password">
-        <button class="enter-btn" id="enter" type="submit" aria-label="submit button for logging in" name="login-button">Login</button>
+<head>
+  <title>Overlook Hotel</title>
+</head>
+
+<body>
+  <nav class="welcome">
+    <h1>Welcome to the Overlook Hotel</h1>
+  </nav>
+  <main class="main-container">
+    <!-- login section -->
+    <section class="welcome-page">
+      <div class="error-message"></div>
+      <input id="login" class="login-fields" aria-label="enter-username" type="text" name="userID" placeholder="User ID">
+      <input id="password" class="login-fields" aria-label="enter-password" type="password" name="password" placeholder="password">
+      <button class="enter-btn" id="enter" type="submit" aria-label="submit button for logging in" name="login-button">Login</button>
+    </section>
+
+    <!-- user section -->
+    <section class="hidden user-page">
+      <section class="left-side-user-history">
+        <!-- insert adjcent HTML with list of previous bookings -->
       </section>
+      <section class="right-side-user-bookroom">
+        <h2>Book a Room</h2>
+        <section class="user-manager-menu-top">
+          <section class="single-user-menu-item">
+            <label for="select-a-date">Select a Date</label>
+            <input class="select-a-date" id="user-date" type="date" name="date" aria-label="enter-date">
+          </section>
+          <section class="single-user-menu-item">
+            <label for="roomType">Room Type:</label>
+            <select class="roomType">
+              <option value="All Types">All Types</option>
+              <option value="Residential Suite">Residential Suite</option>
+              <option value="Suite">Suite</option>
+              <option value="Junior Suite">Junior Suite</option>
+              <option value="Single Room">Single Room</option>
+            </select>
+          </section>
+        </section>
+        <button class="find-room-btn" type="submit" arial-label="submit button for finding available rooms" name="find rooms button">Find Rooms</button>
+        <section class="room-selection">
+          <!-- insert adjacent HTML with list of available rooms -->
+        </section>
+      </section>
+    </section>
 
-      <!-- manager and user section -->
-      <section class="hidden user-page">
-        <section class="left-side-user-history">
+    <!-- manager section -->
+    <section class="hidden manager-page">
+      <section class="left-side-manager-today">
+        <section class="manager-today">
           <!-- insert adjcent HTML with list of previous bookings -->
         </section>
-        <section class="right-side-user-bookroom">
-          <h2>Book a Room</h2>
-
+        <section class="search-for-users date-selector">
+          <label for="search-users">Search Users By Name</label>
+          <input placeholder="search users here.." text="text" class="search-users-entry">
+        </section>
+        <section class="list-of-users">
         </section>
       </section>
-      <section class="hidden manager-page">
-        <section class="left-side-manager-today">
-          <!-- insert adjcent HTML with list of previous bookings -->
+      <section class="right-side-manager-dashboard">
+        <h2>Welcome BossHog</h2>
+        <section class="user-manager-menu-top">
+          <section class="single-user-menu-item">
+            <label for="select-a-date">Rooms Available by Date</label>
+            <input class="select-a-date" id="manager-date" type="date" name="date" aria-label="enter-date">
+          </section>
+          <section class="single-user-menu-item">
+            <label for="roomType">Room Type:</label>
+            <select class="roomType" id="manager-roomType">
+              <option value="All Types">All Types</option>
+              <option value="Residential Suite">Residential Suite</option>
+              <option value="Suite">Suite</option>
+              <option value="Junior Suite">Junior Suite</option>
+              <option value="Single Room">Single Room</option>
+            </select>
+          </section>
         </section>
-        <section class="right-side-manager-dashboard">
-          <h2>Welcome BossHog</h2>
-
+        <div class="manager-as-user-div">
+          <p class="manager-as-user">Book for User</p>
+        </div>
+        <button class="find-room-btn manager-find-room-btn" type="submit" arial-label="submit
+        button for finding available rooms" name="find rooms button">View Available Rooms</button>
+        <section class="room-selection">
+          <!-- insert adjacent HTML with list of available rooms -->
         </section>
       </section>
+    </section>
+  </main>
 
-    </main>
-    <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
-  </body>
+  <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
+</body>
+
 </html>

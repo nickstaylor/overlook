@@ -1,27 +1,28 @@
-// import domUpdates from '.domUpdates'
-import User from './User.js'
-import Hotel from './Hotel.js'
-
 class Manager {
-  constructor(){
+  constructor() {
     this.name = "BossHog"
     this.isBossy = true;
   }
 
-
-  createBooking(){
-
-  }
-
-  deleteBooking(){
-
-  }
-
-  findUser(){
-    //drop down of users.
+  deleteBooking(bookingID) {
+    fetch("https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings", {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id: bookingID
+        })
+      })
+      .then(response => response.json())
+      .then(data => console.log("success", data))
+      .then(data => window.alert("You have deleted this booking"))
+      .catch(err => console.log("error", err.message))
   }
 
 }
+
+
 
 
 export default Manager
