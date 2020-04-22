@@ -1,8 +1,5 @@
-
-
-
 class Booking {
-  constructor(reservation){
+  constructor(reservation) {
     this.id = reservation.id;
     this.userID = reservation.userID;
     this.date = reservation.date;
