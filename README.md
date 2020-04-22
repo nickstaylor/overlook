@@ -21,9 +21,10 @@
 
  ## Functionality
 
-//insert images here
-
  Users can browse and search for available rooms in the hotel.  Users can search by date and also filter rooms by type.  The site keeps track of user bookings and total amount spent.  If Users find a room they like, they may book it!
+ 
+ ![Screen Shot 2020-04-21 at 9 53 53 PM](https://user-images.githubusercontent.com/44849120/79938743-a0cc9680-841a-11ea-97c3-15fa37fe9c44.png)
+
 
  As a manager, you are able to view detailed information about your guests, and book or cancel a reservation for them!
 
