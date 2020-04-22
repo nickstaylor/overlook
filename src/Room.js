@@ -1,5 +1,5 @@
 class Room {
-  constructor(data){
+  constructor(data) {
   this.number = data.number;
   this.roomType = data.roomType;
   this.bidet = data.bidet;
