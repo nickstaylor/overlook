@@ -1,53 +1,67 @@
-import moment from 'moment';
 
 class Hotel {
-  constructor(){
+  constructor() {
     this.allRooms = []
     this.allBookings = []
   }
 
-  calculateRevenueForDay(date){
+  calculateRevenueForDay(date) {
     let roomsBooked = this.getTodaysBookings(date)
-    console.log(date);
-    console.log('roomsBooked', roomsBooked);
-    let revenueForDay = roomsBooked.reduce((sum, booking)=>{
-        this.allRooms.forEach(room=>{
-          if (booking.roomNumber === room.number){
-            sum += room.costPerNight
-          }
-        })
-        return Number(sum.toFixed(2))
+    let revenueForDay = roomsBooked.reduce((sum, booking) => {
+      this.allRooms.forEach(room => {
+        if (booking.roomNumber === room.number) {
+          sum += room.costPerNight
+        }
+      })
+      return Number(sum.toFixed(2))
     }, 0)
-    console.log('revenueForDay', revenueForDay);
     return revenueForDay
   }
 
-  filterRoomsByType(){
-   //move to manager
+  filterRoomsByType(date, roomType) {
+    roomType = roomType.toLowerCase()
+    let roomsAvail = this.findAvailableRoomsByDate(date)
+    let filteredRooms = roomsAvail.filter(room => {
+      return room.roomType === roomType
+    })
+    return filteredRooms
   }
 
-  getTodaysBookings(date){
-    let roomsBooked = this.allBookings.reduce((acc, booking)=>{
-        if (booking.date === date){
-          acc.push(booking)
+  findAvailableRoomsByDate(date) {
+    date = `${date}`
+    let roomsBooked = this.getTodaysBookings(date)
+    let newHotel = [...this.allRooms]
+    roomsBooked.forEach(booking => {
+      newHotel.forEach(room => {
+        if (room.number === booking.roomNumber) {
+          const value = newHotel.indexOf(room)
+          newHotel.splice(value, 1)
         }
-        return acc
+      })
+    })
+    return newHotel
+  }
+
+  getTodaysBookings(date) {
+    let roomsBooked = this.allBookings.reduce((acc, booking) => {
+      if (booking.date === date) {
+        acc.push(booking)
+      }
+      return acc
     }, [])
     return roomsBooked
   }
 
-  //for today or any date
-  checkRoomsAvailableForDay(date){
+  checkRoomsAvailableForDay(date) {
     let roomsBooked = this.getTodaysBookings(date)
     let availRooms = this.allRooms.length - roomsBooked.length
-    // console.log('availRooms', availRooms);
     return availRooms
   }
 
 
-  checkUserBookings(id){
+  checkUserBookings(id) {
     return this.allBookings.filter(booking => booking.userID === id)
-    }
+  }
 
 }
 
